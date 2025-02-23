@@ -1,0 +1,100 @@
+@font-face {
+    font-family: 'SevenSegment';
+    src: url('fonts/DSEG7Classic-Bold.ttf') format('truetype');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: transparent; /* Make background invisible */
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.speedometer {
+    position: absolute;
+    bottom: 100px;
+    left: 87%; /* Move further to the right */
+    transform: translateX(-50%) perspective(800px) rotateY(-25deg); /* Increase right-side perspective */
+    text-align: center;
+    display: none; /* Hidden by default */
+}
+
+.in-car .speedometer {
+    display: block !important; /* Only visible when in a car */
+}
+
+.speed {
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    font-family: 'SevenSegment', sans-serif; /* Apply 7-segment font */
+    transform: perspective(800px) rotateY(-25deg); /* Match perspective */
+}
+
+.unit {
+    font-size: 30px;
+    color: #8b8c8f; /* More vibrant yellow for better visibility */
+    transform: perspective(800px) rotateY(-25deg); /* Match perspective */
+}
+
+.status {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 20px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.status div {
+    font-size: 18px;
+    padding: 5px 10px;
+    color: white; /* Change to white */
+    text-transform: uppercase;
+    position: relative;
+}
+
+.status div::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 5px;
+    background: grey;
+    margin-top: 5px;
+    border-radius: 10px;
+    transition: width 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+.active {
+    color: white; /* Change color when active */
+    font-weight: bold;
+}
+
+.active::after {
+    background: purple;
+}
+
+.in-car #fuel.active::after {
+    width: var(--fuel-level, 100%); /* Fuel level controlled by CSS variable */
+    background: purple !important; /* Fuel bar changed to neon purple */
+    box-shadow: 0 0 10px purple; /* Neon effect */
+}
+
+.in-car #engine.active::after {
+    width: 100%;
+    background: blue !important; /* Engine bar changed to neon blue */
+    box-shadow: 0 0 10px blue; /* Neon effect */
+}
+
+.in-car #belt.active::after {
+    width: 100%;
+    background: purple !important; /* Belt bar changed to neon purple */
+    box-shadow: 0 0 10px purple; /* Neon effect */
+}
+
+#fuel::after {
+    width: var(--fuel-level, 100%);
+    transition: width 0.3s ease-in-out;
+}
