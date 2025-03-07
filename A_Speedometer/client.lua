@@ -1,14 +1,14 @@
 local display = false
 local seatbeltOn = false -- Track seatbelt status manually
 
--- 🛠️ Toggle Speedometer Manually (Optional Command)
+
 RegisterCommand("speedometer", function()
     display = not display
     SendNUIMessage({show = display})
     SetNuiFocus(display, display)
 end)
 
--- 🛠️ Detect Seatbelt Key Press (Manual System)
+
 CreateThread(function()
     while true do
         local playerPed = PlayerPedId()
@@ -18,13 +18,13 @@ CreateThread(function()
                 TriggerEvent("QBCore:Notify", "Seatbelt " .. (seatbeltOn and "On" or "Off"), "primary")
             end
         else
-            seatbeltOn = false -- Reset when exiting the vehicle
+            seatbeltOn = false 
         end
         Wait(0)
     end
 end)
 
--- 🛠️ Main Speedometer Update Thread
+
 CreateThread(function()
     while true do
         local playerPed = PlayerPedId()
@@ -33,9 +33,9 @@ CreateThread(function()
 
         if isInCar then
             local speed = math.floor(GetEntitySpeed(veh) * 3.6) -- Convert to KMH
-            local fuel = math.floor(exports["LegacyFuel"]:GetFuel(veh)) -- Ensure fuel is an integer
+            local fuel = math.floor(exports["LegacyFuel"]:GetFuel(veh)) 
             local engine = GetIsVehicleEngineRunning(veh)
-            local belt = seatbeltOn -- Use manually tracked seatbelt status
+            local belt = seatbeltOn
 
 
 
@@ -47,7 +47,7 @@ CreateThread(function()
                 inCar = true
             })
         else
-            -- Hide UI when outside the car
+
             SendNUIMessage({
                 speed = 0,
                 fuel = 100,
@@ -56,11 +56,11 @@ CreateThread(function()
                 inCar = false
             })
         end
-        Wait(500) -- Update every 500ms
+        Wait(500) 
     end
 end)
 
--- 🛠️ NUI Callback to Hide UI
+
 RegisterNUICallback("close", function()
     display = false
     SendNUIMessage({show = false})
